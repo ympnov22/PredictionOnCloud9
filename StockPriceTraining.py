@@ -165,6 +165,19 @@ def Training(input_num,hidden_1_num,hidden_2_num,output_num,test_size,np_data_x,
 
             acuracy.append(temp_a)
             profit.append(temp_p)
+            
+            train_x = []
+            train_y = []
+            test_x = []
+            test_y = []
+            
+            for i in range(len(np_data_x)):
+                if(np.random.rand() > TEST_SIZE):
+                    train_x.append(np_data_x[i])
+                    train_y.append(np_data_y[i])
+                else:
+                    test_x.append(np_data_x[i])
+                    test_y.append(np_data_y[i])
     
     result_y = sess.run(y, feed_dict={x: test_x, y_: test_y})
 
