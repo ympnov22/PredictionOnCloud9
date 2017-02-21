@@ -3,7 +3,7 @@ import numpy as np
 import tensorflow as tf
 
 def MakePredictionData_x():
-    pd_data = pd.read_csv('PredictionDataRaw.csv' ,index_col = 0, header = 1)
+    pd_data = pd.read_csv('PredictionDataRaw.csv' ,index_col = 1, header = 2)
     #print(pd_data)
     pd_data_diff = pd_data.diff(periods=1)
     #print(pd_data_diff)
@@ -58,4 +58,4 @@ def Prediction(input_num,hidden_1_num,hidden_2_num,output_num,np_data_x):
     np.savetxt("PredictionResult.csv", result_y, delimiter=",")
 
 np_data_x = MakePredictionData_x()
-Prediction(36,50,30,2,np_data_x)
+Prediction(36,50,50,2,np_data_x)

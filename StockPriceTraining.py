@@ -5,6 +5,8 @@ import numpy as np
 
 import tensorflow as tf
 
+import sys
+
 def LoadData(tarm):
     end = datetime.date.today()
     start = end - datetime.timedelta(days=tarm)
@@ -193,11 +195,13 @@ def Training(input_num,hidden_1_num,hidden_2_num,output_num,test_size,np_data_x,
 
     saver.save(sess, "./model.ckpt")
     sess.close()
-    
+
+args = sys.argv
+   
 pd_load_data = LoadData(3000)
-#print(pd_data)
+print(pd_load_data)
 np_data_x = MakeTrainingData_x(pd_load_data)
 #print(np_data_x)
 np_data_y = MakeTrainingData_y(pd_load_data)
 #print(np_data_y)
-Training(36,50,30,2,0.1,np_data_x,np_data_y,5000)
+Training(36,int(args[1]),int(args[1]),2,0.1,np_data_x,np_data_y,1000)
