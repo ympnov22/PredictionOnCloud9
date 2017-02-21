@@ -28,7 +28,7 @@ def LoadData(tarm):
     pd_data = pd.concat([pd_CNY, pd_JPY, pd_GBP, pd_EUR, pd_SP500, pd_SSE, pd_N225, pd_GDAXI, pd_FTSE], axis=1, keys = ['CNY','JPY','GBP','EUR','pd_SP500','SEE','N225','GDAXI','FTSE'])
     pd_data.to_csv('StockDataRaw.csv')
     
-    #print(pd_data)
+    print(pd_data)
     
     return pd_data
     
@@ -52,5 +52,5 @@ def MakePredictionData_x(pd_data):
 
 pd_load_data = LoadData(3000)
 #print(pd_load_data)
-np_data_x = MakePredictionData_x(pd_load_data)
-print(np_data_x)
+#np_data_x = MakePredictionData_x(pd_load_data)
+#print(np_data_x)

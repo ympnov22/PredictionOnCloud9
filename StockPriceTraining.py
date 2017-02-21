@@ -198,10 +198,10 @@ def Training(input_num,hidden_1_num,hidden_2_num,output_num,test_size,np_data_x,
 
 args = sys.argv
    
-pd_load_data = LoadData(3000)
+pd_load_data = LoadData(4000)
 print(pd_load_data)
 np_data_x = MakeTrainingData_x(pd_load_data)
 #print(np_data_x)
 np_data_y = MakeTrainingData_y(pd_load_data)
 #print(np_data_y)
-Training(36,int(args[1]),int(args[1]),2,0.1,np_data_x,np_data_y,1000)
+Training(int(args[1]),int(args[2]),int(args[3]),int(args[4]),0.1,np_data_x,np_data_y,1000)
