@@ -5,7 +5,7 @@ import tensorflow as tf
 import sys
 
 def MakePredictionData_x():
-    pd_data = pd.read_csv('PredictionDataRaw.csv' ,index_col = 0, header = 1)
+    pd_data = pd.read_csv('StockDataRaw.csv' ,index_col = 0, header = 1)
     #print(pd_data)
     select = [0,1,2,3,6,7,8,9,12,13,14,15,18,19,20,21,24,25,26,27,30,31,32,33,36,37,38,39,42,43,44,45,48,49,50,51]
     pd_data_select = pd_data[select]
