@@ -137,12 +137,12 @@ def Training(input_num,hidden_1_num,hidden_2_num,output_num,test_size,np_data_x,
         sess.run(train, feed_dict={x: train_x, y_: train_y})
         
         if(i%1000 == 0):
-            print("training..." + "step:" + str(i))
-            print(sess.run(loss, feed_dict={x: train_x, y_: train_y}))
+            #print("training..." + "step:" + str(i))
+            #print(sess.run(loss, feed_dict={x: train_x, y_: train_y}))
             training_loss.append(sess.run(loss, feed_dict={x: train_x, y_: train_y}))
             
-            print("testing...")
-            print(sess.run(loss, feed_dict={x: test_x, y_: test_y}))
+            #print("testing...")
+            #print(sess.run(loss, feed_dict={x: test_x, y_: test_y}))
             testing_loss.append(sess.run(loss, feed_dict={x: test_x, y_: test_y}))
             
             output = sess.run(y, feed_dict={x: test_x})
@@ -159,10 +159,10 @@ def Training(input_num,hidden_1_num,hidden_2_num,output_num,test_size,np_data_x,
                     
             temp_a = float(temp_a) / len(output)
                     
-            print('acuracy is ')
-            print(temp_a)
+            #print('acuracy is ')
+            #print(temp_a)
 
-            print('profit is ')
+            #print('profit is ')
             print(temp_p)
 
             acuracy.append(temp_a)
@@ -202,4 +202,4 @@ np_data_x = MakeTrainingData_x(pd_load_data)
 #print(np_data_x)
 np_data_y = MakeTrainingData_y(pd_load_data)
 #print(np_data_y)
-Training(36,int(np_genom[0]),int(np_genom[1]),2,0.1,np_data_x,np_data_y,10000)
+Training(36,int(np_genom[0]),int(np_genom[1]),2,0.1,np_data_x,np_data_y,50000)

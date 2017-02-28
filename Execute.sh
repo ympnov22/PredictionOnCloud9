@@ -1,13 +1,13 @@
 python GenerateGenom.py
 
 sh Training.sh
-python Selection.py
+python GeneticAlgorithm.py
 
 sh Training.sh
-python Selection.py
+python GeneticAlgorithm.py
 
 sh Training.sh
-python Selection.py
+python GeneticAlgorithm.py
 
 sh Training.sh
-python Selection.py
+python GeneticAlgorithm.py
