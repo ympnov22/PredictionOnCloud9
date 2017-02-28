@@ -26,7 +26,7 @@ def LoadData(tarm):
     pd_FTSE = pdr.DataReader('^FTSE', 'yahoo', start, end)
     
     pd_data = pd.concat([pd_CNY, pd_JPY, pd_GBP, pd_EUR, pd_SP500, pd_SSE, pd_N225, pd_GDAXI, pd_FTSE], axis=1, keys = ['CNY','JPY','GBP','EUR','pd_SP500','SEE','N225','GDAXI','FTSE'])
-    pd_data.to_csv('StockDataRaw.csv')
+    #pd_data.to_csv('StockDataRaw.csv')
     
     #print(pd_data)
     
@@ -46,7 +46,7 @@ def MakeTrainingData_x(pd_data):
     np_data_x = pd_data_diff_dn_norm_selct.values[:-2,:]
     #print(np_training_data_x)
     
-    np.savetxt("TrainingData_x.csv", np_data_x, delimiter=",")
+    #np.savetxt("TrainingData_x.csv", np_data_x, delimiter=",")
     
     return np_data_x
 
@@ -62,7 +62,7 @@ def MakeTrainingData_y(pd_data):
     #print(pd_data_diff_dn_norm_con)
     np_data_y = pd_data_diff_dn_norm_con.values[2:,:]
     
-    np.savetxt("TrainingData_y.csv", np_data_y, delimiter=",")
+    #np.savetxt("TrainingData_y.csv", np_data_y, delimiter=",")
     
     return np_data_y
 
@@ -180,28 +180,26 @@ def Training(input_num,hidden_1_num,hidden_2_num,output_num,test_size,np_data_x,
                 else:
                     test_x.append(np_data_x[i])
                     test_y.append(np_data_y[i])
-    
-    result_y = sess.run(y, feed_dict={x: test_x, y_: test_y})
-
-    np.savetxt("test_x.csv", test_x, delimiter=",")
-    np.savetxt("test_y.csv", test_y, delimiter=",")
-    np.savetxt("test_y_.csv", result_y, delimiter=",")
 
     np.savetxt("training_loss.csv", training_loss, delimiter=",")
     np.savetxt("testing_loss.csv", testing_loss, delimiter=",")
 
-    np.savetxt("acuracy.csv", acuracy, delimiter=",")
+    np.savetxt("accuracy.csv", acuracy, delimiter=",")
     np.savetxt("profit.csv", profit, delimiter=",")
 
     saver.save(sess, "./model.ckpt")
     sess.close()
 
 args = sys.argv
-   
+
+np_genom = np.loadtxt("genom.csv",delimiter=",")
+#print(int(np_genom[0]))
+#print(int(np_genom[1]))
+
 pd_load_data = LoadData(4000)
-print(pd_load_data)
+#print(pd_load_data)
 np_data_x = MakeTrainingData_x(pd_load_data)
 #print(np_data_x)
 np_data_y = MakeTrainingData_y(pd_load_data)
 #print(np_data_y)
-Training(int(args[1]),int(args[2]),int(args[3]),int(args[4]),0.1,np_data_x,np_data_y,10000)
+Training(36,int(np_genom[0]),int(np_genom[1]),2,0.1,np_data_x,np_data_y,10000)
