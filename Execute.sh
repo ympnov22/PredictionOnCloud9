@@ -1,8 +1,8 @@
 @echo off
 echo starting batch
 
-echo generate genom
-python GenerateGenom.py
+#echo generate genom
+#python GenerateGenom.py
 
 echo 1st generation
 sh Training.sh

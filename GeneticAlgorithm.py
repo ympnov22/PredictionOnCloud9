@@ -22,9 +22,9 @@ np_profit_reshape_cut = np_profit_reshape[:,-MEAN_NUM:]
 np_profit_mean = np_profit_reshape_cut.mean(axis = 1)
 #print(np_profit_mean)
 sorted_index = np.argsort(np_profit_mean)[::-1]
-#print(sorted_index)
+print(sorted_index)
 selected = sorted_index[:SELECT_NUM]
-#print(selected)
+print(selected)
 
 for i in range(GENOM_NUM):
     genom_1_index = np.random.randint(0,SELECT_NUM)
