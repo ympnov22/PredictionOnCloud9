@@ -2,7 +2,7 @@ import os
 import random
 import numpy as np
 
-GENOM_NUM = 30
+GENOM_NUM = 10
 GENOM_SIZE = 2
 
 for i in range(GENOM_NUM):

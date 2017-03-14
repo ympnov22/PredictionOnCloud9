@@ -1,4 +1,4 @@
-GENOM_NUM = 30
+GENOM_NUM = 10
 
 f = open('Training.sh', 'w')
 

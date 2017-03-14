@@ -58,12 +58,18 @@ def Prediction(input_num,hidden_1_num,hidden_2_num,output_num,np_data_x):
 
     print("predicting...")  
     result_y = sess.run(y, feed_dict={x: np_data_x})
-    print(result_y[-1])
+    #print(result_y[-1])
 
     np.savetxt("PredictionResult.csv", result_y, delimiter=",")
-
+    
+    return result_y
 
 args = sys.argv
+np_genom = np.loadtxt("genom.csv",delimiter=",")
+print(int(np_genom[0]))
+print(int(np_genom[1]))
 
 np_data_x = MakePredictionData_x()
-Prediction(int(args[1]),int(args[2]),int(args[3]),int(args[4]),np_data_x)
+Result_y = Prediction(36,int(np_genom[0]),int(np_genom[1]),2,np_data_x)
+
+print(Result_y)
