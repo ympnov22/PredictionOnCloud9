@@ -1,23 +1,64 @@
 import pandas as pd
+import pandas_datareader.data as pdr
 import numpy as np
 import tensorflow as tf
+import datetime
 
 import sys
 
-def MakePredictionData_x():
-    pd_data = pd.read_csv('StockDataRaw.csv' ,index_col = 0, header = 1)
-    #print(pd_data)
-    select = [0,1,2,3,6,7,8,9,12,13,14,15,18,19,20,21,24,25,26,27,30,31,32,33,36,37,38,39,42,43,44,45,48,49,50,51]
-    pd_data_select = pd_data[select]
-    #print(pd_data_select)
-    pd_data_select_diff = pd_data_select.diff(periods=1)
-    #print(pd_data_select_diff)
-    pd_data_select_diff_dn = pd_data_select_diff.dropna()
-    #print(pd_data_select_diff_dn)
-    pd_data_select_diff_dn_norm = pd_data_select_diff_dn.apply(lambda x: (x/x.std()), axis=0).fillna(0)
-    #print(pd_data_select_diff_dn_norm)
+def LoadData(tarm):
+    end = datetime.date.today()
+    start = end - datetime.timedelta(days=tarm)
     
-    np_data_x = pd_data_select_diff_dn_norm.values[-10:,:]
+    #print(start)
+    #print(end)
+    
+    pd_CNY = pdr.DataReader('CNY=X', 'yahoo', start, end)
+    pd_CNY = pd_CNY[['Open','High','Low','Close']]
+    
+    pd_JPY = pdr.DataReader('JPY=X', 'yahoo', start, end)
+    pd_JPY = pd_JPY[['Open','High','Low','Close']]
+    
+    pd_GBP = pdr.DataReader('GBP=X', 'yahoo', start, end)
+    pd_GBP = pd_GBP[['Open','High','Low','Close']]
+    
+    pd_EUR = pdr.DataReader('EUR=X', 'yahoo', start, end)
+    pd_EUR = pd_EUR[['Open','High','Low','Close']]
+    
+    pd_SP500 = pdr.DataReader('^GSPC', 'yahoo', start, end)
+    pd_SP500 = pd_SP500[['Open','High','Low','Close']]
+    
+    pd_SSE = pdr.DataReader('000001.SS', 'yahoo', start, end)
+    pd_SSE = pd_SSE[['Open','High','Low','Close']]
+    
+    pd_N225 = pdr.DataReader('^N225', 'yahoo', start, end)
+    pd_N225 = pd_N225[['Open','High','Low','Close']]
+    
+    pd_GDAXI = pdr.DataReader('^GDAXI', 'yahoo', start, end)
+    pd_GDAXI = pd_GDAXI[['Open','High','Low','Close']]
+    
+    pd_FTSE = pdr.DataReader('^FTSE', 'yahoo', start, end)
+    pd_FTSE = pd_FTSE[['Open','High','Low','Close']]
+    
+    pd_data = pd.concat([pd_CNY, pd_JPY, pd_GBP, pd_EUR, pd_SP500, pd_SSE, pd_N225, pd_GDAXI, pd_FTSE], axis=1, keys = ['CNY','JPY','GBP','EUR','SP500','SEE','N225','GDAXI','FTSE'])
+    #pd_data.to_csv('StockDataRaw.csv')
+    
+    #print(pd_data['JPY'][['Open','Close']])
+    print(pd_data.tail(10))
+    return pd_data
+    
+def MakePredictionData_x(pd_data):
+    pd_data = pd.read_csv('StockDataRaw.csv' ,index_col = 0, header = 1)
+    print(pd_data)
+    
+    pd_data_diff = pd_data.diff(periods=1)
+    #print(pd_data_diff)
+    pd_data_diff_dn = pd_data_diff.dropna()
+    #print(pd_data_diff_dn)
+    pd_data_diff_dn_norm = pd_data_diff_dn.apply(lambda x: (x/x.std()), axis=0).fillna(0)
+    #print(pd_data_diff_dn_norm)
+    np_data_x = pd_data_diff_dn_norm.values[:,:]
+    #print(np_data_x)
     
     #np.savetxt("PredictionData_x.csv", np_data_x, delimiter=",")
     
@@ -65,11 +106,12 @@ def Prediction(input_num,hidden_1_num,hidden_2_num,output_num,np_data_x):
     return result_y
 
 args = sys.argv
-np_genom = np.loadtxt("genom.csv",delimiter=",")
-print(int(np_genom[0]))
-print(int(np_genom[1]))
+pd_load_data = pd.DataFrame(index=[1,1], columns=[1,1])
+#pd_load_data = LoadData(10000)
+#print(pd_load_data)
+np_data_x = MakePredictionData_x(pd_load_data)
+#print(np_data_x.shape)
+#Result_y = Prediction(36,int(args[1]),int(args[2]),2,np_data_x)
+Result_y = Prediction(36,200,200,2,np_data_x)
 
-np_data_x = MakePredictionData_x()
-Result_y = Prediction(36,int(np_genom[0]),int(np_genom[1]),2,np_data_x)
-
-print(Result_y)
+print(Result_y[-1])
